@@ -134,6 +134,8 @@ The relation prompt **\<R>** learned though Relation Inversion can be applied to
     ```
     Where  `model_id` is the model directory, `num_samples` is the number of images to generate for each prompt, `guidance_scale` is the classifier-free guidance scale.
 
+    We provide several example templates for each relation in `./templates/templates.py`, such as `painted_on_examples`, `carved_by_examples`, etc.
+
     The generation results will be saved in the `inference` folder in each model's directory.
 
 ### Diverse Generation
