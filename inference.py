@@ -66,6 +66,50 @@ def make_image_grid(imgs, rows, cols):
     return grid
 
 
+def inference_fn(
+        examples: list,
+        prompt: str,
+        num_samples: int,
+        guidance_scale: float,
+        ddim_steps: int,
+    ) -> Image.Image:
+
+    import pathlib
+
+    """
+    same functionality as main(), but for gradio demo usage,
+    so slightly modified the input and output format
+    """
+    # select model_id
+    model_id = pathlib.Path(examples[0]).stem
+
+    # create inference pipeline
+    if torch.cuda.is_available():
+        pipe = StableDiffusionPipeline.from_pretrained(os.path.join('experiments', model_id),torch_dtype=torch.float16).to('cuda')
+    else:
+        pipe = StableDiffusionPipeline.from_pretrained(os.path.join('experiments', model_id)).to('cpu')
+
+    # single text prompt
+    if prompt is not None:
+        prompt_list = [prompt]
+    else:
+        prompt_list = []
+
+    for prompt in prompt_list:
+        # insert relation prompt <R>
+        # prompt = prompt.lower().replace("<r>", "<R>").format(placeholder_string)
+        prompt = prompt.lower().replace("<r>", "<R>").format("<R>")
+
+        # batch generation
+        images = pipe(prompt, num_inference_steps=ddim_steps, guidance_scale=guidance_scale, num_images_per_prompt=num_samples).images
+
+        # save a grid of images
+        image_grid = make_image_grid(images, rows=2, cols=math.ceil(num_samples/2))
+        print(image_grid)
+
+        return image_grid
+
+
 def main():
     args = parse_args()
 
@@ -88,7 +132,7 @@ def main():
     if args.template_name is not None:
         # read the selected text prompts for generation
         prompt_list.extend(inference_templates[args.template_name])
-        
+
     for prompt in prompt_list:
         # insert relation prompt <R>
         prompt = prompt.lower().replace("<r>", "<R>").format(args.placeholder_string)
