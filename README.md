@@ -89,6 +89,7 @@ Given a set of exemplar images and their entities' coarse descriptions, you can 
         --lr_scheduler="constant" \
         --lr_warmup_steps="0" \
         --output_dir="./experiments/painted_on" \
+        --save_steps="1000" \
         --importance_sampling \
         --denoise_loss_weight="1.0" \
         --steer_loss_weight="0.01" \
@@ -133,7 +134,7 @@ We can use the learned relation prompt **\<R>** to generate relation-specific im
     ```
     Or write a list prompts in `./templates/templates.py` with the key name `$your_template_name` and generate images for every prompt in the list `$your_template_name`:
     ```
-    $your_template_name='painted_on_examples'
+    your_template_name='painted_on_examples'
     python inference.py \
     --model_id ./experiments/painted_on \
     --template_name $your_template_name \
