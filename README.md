@@ -159,7 +159,12 @@ You can also specify diverse prompts with the relation prompt **\<R>** to genera
 ![diverse_results](./assets/diverse.jpg)
 
 
+## The ReVersion Benchmark
+The ReVersion Benchmark consists of diverse relations and entities, along with a set of well-defined text descriptions.
 
+- [<b>Relations and Entities</b>](https://drive.google.com/drive/folders/1FU1Ni-oDpxQCNYKo-ZLEfSGqO-j_Hw7X?usp=sharing). We define ten representative object relations with different abstraction levels, ranging from basic spatial relations (*e.g.*, “on top of”), entity interactions (*e.g.*, “shakes hands with”), to abstract concepts (*e.g.*, “is carved by”). A wide range of entities, such as animals, human, household items, are involved to further increase the diversity of the benchmark.
+- [<b>Exemplar Images and Text Descriptions</b>](https://drive.google.com/drive/folders/1FU1Ni-oDpxQCNYKo-ZLEfSGqO-j_Hw7X?usp=sharing). For each relation, we collect four to ten exemplar images containing different entities. We further annotate several text templates for each exemplar image to describe them with different levels of details. These training templates can be used for the optimization of the relation prompt.
+- [<b>Benchmark Scenarios</b>](https://github.com/ziqihuangg/ReVersion/blob/master/templates/benchmark_scenarios.py). We design 100 inference templates composing of different object entities for each of the ten relations.
 
 ## Citation
 
