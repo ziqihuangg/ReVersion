@@ -50,6 +50,12 @@ def parse_args():
         default=7.5,
         help="scale for classifier-free guidance",
     )
+    parser.add_argument(
+        "--only_load_embeds",
+        action="store_true",
+        default=False,
+        help="If specified, the experiment folder only contains the relation prompt, but does not contain the entire folder",
+    )
     args = parser.parse_args()
     return args
 
@@ -114,7 +120,36 @@ def main():
     args = parse_args()
 
     # create inference pipeline
-    pipe = StableDiffusionPipeline.from_pretrained(args.model_id,torch_dtype=torch.float16).to("cuda")
+    if args.only_load_embeds:
+
+        print('load relation prompt only')
+
+        embed_path = os.path.join(args.model_id, 'learned_embeds.bin')
+        learned_embeds = torch.load(embed_path)
+        
+        pipe = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5",torch_dtype=torch.float16).to("cuda")
+        
+        text_encoder = pipe.text_encoder
+        tokenizer = pipe.tokenizer
+
+        # keep original embeddings as reference
+        orig_embeds_params = text_encoder.get_input_embeddings().weight.data.clone()
+
+        # Add the placeholder token in tokenizer
+        tokenizer.add_tokens(args.placeholder_string)
+        text_encoder.get_input_embeddings().weight.data = torch.cat((orig_embeds_params, orig_embeds_params[0:1]))
+        text_encoder.resize_token_embeddings(len(tokenizer)) 
+
+        # Let's make sure we don't update any embedding weights besides the newly added token
+        placeholder_token_id = tokenizer.convert_tokens_to_ids(args.placeholder_string)
+        index_no_updates = torch.arange(len(tokenizer)) != placeholder_token_id
+        text_encoder.get_input_embeddings().weight.data[index_no_updates] = orig_embeds_params
+        text_encoder.get_input_embeddings().weight.data[placeholder_token_id] = learned_embeds[args.placeholder_string]
+
+    else:
+        # now this works
+        print('load full model')
+        pipe = StableDiffusionPipeline.from_pretrained(args.model_id,torch_dtype=torch.float16).to("cuda")
 
     # make directory to save images
     image_root_folder = os.path.join(args.model_id, 'inference')
@@ -154,6 +189,7 @@ def main():
         image_grid = make_image_grid(images, rows=2, cols=math.ceil(args.num_samples/2))
         image_grid_path = os.path.join(image_root_folder, prompt, f'{prompt}.png')
         image_grid.save(image_grid_path)
+        print(f'saved to {image_grid_path}')
 
 
 if __name__ == "__main__":
