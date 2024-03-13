@@ -176,6 +176,6 @@ tags
 # ReVersion ignore
 .my-credentials
 /scripts
-# /experiments
+/experiments
 /train
 reversion_benchmark_v1
