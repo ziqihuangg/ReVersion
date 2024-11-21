@@ -1,4 +1,4 @@
-# ReVersion: Diffusion-Based Relation Inversion from Images
+# ReVersion (SIGGRAPH Asia, 2024)
 
 <!-- ![visitors](https://visitor-badge.glitch.me/badge?page_id=ziqihuangg/ReVersion&right_color=MediumAquamarine) -->
 [![Paper](https://img.shields.io/badge/cs.CV-Paper-66cdaa?logo=arxiv&logoColor=66cdaa)](https://arxiv.org/abs/2303.13495)
