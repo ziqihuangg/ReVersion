@@ -5,7 +5,7 @@
 [![Paper](https://img.shields.io/badge/cs.CV-Paper-66cdaa?logo=arxiv&logoColor=66cdaa)](https://arxiv.org/abs/2303.13495)
 [![Project Page](https://img.shields.io/badge/Project-Website-66cdaa?logo=googlechrome&logoColor=66cdaa)](https://ziqihuangg.github.io/projects/reversion.html)
 [![Video](https://img.shields.io/badge/YouTube-Video-66cdaa?logo=youtube&logoColor=66cdaa)](https://www.youtube.com/watch?v=pkal3yjyyKQ)
-[![Visitor](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fziqihuangg%2FReVersion&count_bg=%2366cdaa&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Visitors&edge_flat=false)](https://hits.seeyoufarm.com)
+![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fziqihuangg%2FReVersion&label=Visitors&icon=people&color=%2366cdaa)
 [![Hugging Face](https://img.shields.io/badge/Demo-%F0%9F%A4%97%20Hugging%20Face-66cdaa)](https://huggingface.co/spaces/Ziqi/ReVersion)
 
 This repository contains the implementation of the following paper:
